@@ -9,7 +9,7 @@ class NolimitholdemRound(LimitholdemRound):
     '''
 
     def __init__(self, num_players, init_raise_amount):
-        ''' Initilize the round class
+        ''' Initialize the round class
 
         Args:
             allowed_raise_num (int): The number of allowed raise num
@@ -22,17 +22,17 @@ class NolimitholdemRound(LimitholdemRound):
         self.current_raise_amount = self.init_raise_amount
 
         # Count the number without raise
-        # If every player agree to not raise, the round is overr
+        # If every player agreed to not raise, the round is over
         self.not_raise_num = 0
 
         # Raised amount for each player
         self.raised = [0 for _ in range(self.num_players)]
 
     def start_new_round(self, game_pointer, raised=None):
-        ''' Start a new bidding round
+        ''' Start a new bidding round: 4 rounds in total, namely, preflop, flop, turn and river
 
         Args:
-            raised (list): Initialize the chips for each player
+            raised (list): Initialize the in-chips for each player for the current round
 
         Note: For the first round of the game, we need to setup the big/small blind
         '''
@@ -40,12 +40,13 @@ class NolimitholdemRound(LimitholdemRound):
         self.not_raise_num = 0
         self.current_raise_amount = self.init_raise_amount
         if raised:
-            self.raised = raised
+            self.raised = raised # for preflop big/small blinds
         else:
             self.raised = [0 for _ in range(self.num_players)]
 
     def proceed_round(self, players, action):
         ''' Call other Classes's functions to keep one round running
+        TODO: check action list/ rewrite to accomodate betting according to a percentage of the pot
 
         Args:
             players (list): The list of players that play the game
@@ -82,7 +83,7 @@ class NolimitholdemRound(LimitholdemRound):
         return self.game_pointer
 
     def get_nolimit_legal_actions(self, players):
-        ''' Obtain the legal actions for the curent player
+        ''' Obtain the legal actions for the current player
 
         Args:
             players (list): The players in the game
